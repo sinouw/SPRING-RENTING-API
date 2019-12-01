@@ -23,12 +23,12 @@ public class Renting implements Serializable {
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
 	
-	  	@Id
+	  	
 	    @ManyToOne
 	    @JoinColumn(name = "house_id")
 	    private House house;
 	  	
-	  	@Id
+	  	
 	    @ManyToOne
 	    @JoinColumn(name = "user_id")
 	    private User user;

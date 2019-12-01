@@ -16,6 +16,8 @@ public class House {
 
 	    private String description;
 	    
+	    private Boolean Reserved = true;
+	    
 	    @OneToOne(cascade = CascadeType.ALL)
 		@JoinColumn(name = "address_id", referencedColumnName = "id")
 	    private Address address;
@@ -31,8 +33,9 @@ public class House {
 
 		public House() {}
 
-		public House(String description) {
+		public House(String description,Boolean Reserved) {
 			this.description = description;
+			this.Reserved=Reserved;
 		}
 
 		public Long getId() {
@@ -65,6 +68,14 @@ public class House {
 
 		public void setAddresse(Address address) {
 			this.address = address;
+		}
+
+		public Boolean getReserved() {
+			return Reserved;
+		}
+
+		public void setReserved(Boolean reserved) {
+			Reserved = reserved;
 		}
 		
 		
