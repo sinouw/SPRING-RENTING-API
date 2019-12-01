@@ -14,8 +14,8 @@ import com.work.rentals.model.auth.Role;
 import com.work.rentals.model.auth.RoleName;
 import com.work.rentals.repository.IRoleRepository;
 
-
-@Component
+//uncomment this just for the first time you oppen the project ^^ 
+//@Component
 public class DataLoader {
 
 	@Autowired
