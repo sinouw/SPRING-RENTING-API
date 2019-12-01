@@ -1,7 +1,7 @@
 package com.work.rentals.security.services;
 
-import com.work.rentals.model.User;
-import com.work.rentals.repository.UserRepository;
+import com.work.rentals.model.auth.User;
+import com.work.rentals.repository.IUserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
-	UserRepository userRepository;
+	IUserRepository userRepository;
 
 	@Override
 	@Transactional

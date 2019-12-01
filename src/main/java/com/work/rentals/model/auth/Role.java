@@ -1,4 +1,4 @@
-package com.work.rentals.model;
+package com.work.rentals.model.auth;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

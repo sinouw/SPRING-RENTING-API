@@ -2,12 +2,10 @@ package com.work.rentals.model;
 
 
 import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.OneToMany;
 
-import javax.persistence.Id;
+import javax.persistence.*;
+
+import com.work.rentals.model.auth.User;
 
 @Entity
 public class House {
@@ -18,15 +16,22 @@ public class House {
 
 	    private String description;
 	    
-	    private Address adresse;
+	    @OneToOne(cascade = CascadeType.ALL)
+		@JoinColumn(name = "address_id", referencedColumnName = "id")
+	    private Address address;
 
+	    
+	    @ManyToOne(fetch = FetchType.LAZY)
+	    @JoinColumn(name = "user_id", nullable = false)
+	    private User user;
+	    
+	    
 	    @OneToMany(mappedBy = "house")
 	    private Set<Renting> rentals;
 
 		public House() {}
 
 		public House(String description) {
-
 			this.description = description;
 		}
 
@@ -52,6 +57,14 @@ public class House {
 
 		public void setRentals(Set<Renting> rentals) {
 			this.rentals = rentals;
+		}
+
+		public Address getAddresse() {
+			return address;
+		}
+
+		public void setAddresse(Address address) {
+			this.address = address;
 		}
 		
 		

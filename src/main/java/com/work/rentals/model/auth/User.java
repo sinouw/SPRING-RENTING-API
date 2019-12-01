@@ -1,4 +1,4 @@
-package com.work.rentals.model;
+package com.work.rentals.model.auth;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,6 +20,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.NaturalId;
+
+import com.work.rentals.model.House;
+import com.work.rentals.model.Renting;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -60,10 +63,15 @@ public class User{
     private Set<Role> roles = new HashSet<>();
 
     
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "user")
+    private Set<House> houses = new HashSet<>();
+    
     
     
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Renting> rentals;
+    private Set<Renting> rentals = new HashSet<>();
     
     public User() {}
 
@@ -71,8 +79,7 @@ public class User{
         this.name = name;
         this.username = username;
         this.email = email;
-        this.password = password;
-        this.rentals = new HashSet<>();
+        this.password = password; 
     }
 
     public Long getId() {

@@ -1,7 +1,7 @@
 package com.work.rentals.security.services;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.work.rentals.model.User;
+import com.work.rentals.model.auth.User;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

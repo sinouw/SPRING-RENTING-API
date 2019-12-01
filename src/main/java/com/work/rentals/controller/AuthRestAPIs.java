@@ -24,11 +24,11 @@ import com.work.rentals.message.request.LoginForm;
 import com.work.rentals.message.request.SignUpForm;
 import com.work.rentals.message.response.JwtResponse;
 import com.work.rentals.message.response.ResponseMessage;
-import com.work.rentals.model.Role;
-import com.work.rentals.model.RoleName;
-import com.work.rentals.model.User;
-import com.work.rentals.repository.RoleRepository;
-import com.work.rentals.repository.UserRepository;
+import com.work.rentals.model.auth.Role;
+import com.work.rentals.model.auth.RoleName;
+import com.work.rentals.model.auth.User;
+import com.work.rentals.repository.IRoleRepository;
+import com.work.rentals.repository.IUserRepository;
 import com.work.rentals.security.jwt.JwtProvider;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -40,10 +40,10 @@ public class AuthRestAPIs {
 	AuthenticationManager authenticationManager;
 
 	@Autowired
-	UserRepository userRepository;
+	IUserRepository userRepository;
 
 	@Autowired
-	RoleRepository roleRepository;
+	IRoleRepository roleRepository;
 
 	@Autowired
 	PasswordEncoder encoder;
@@ -65,8 +65,9 @@ public class AuthRestAPIs {
 		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
 	}
 
-	@PostMapping("/signup")
-	public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
+	//AddUserFromAdmins
+	@PostMapping("/signupForAdmin")
+	public ResponseEntity<?> registerUserForAdmin(@Valid @RequestBody SignUpForm signUpRequest) {
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
 			return new ResponseEntity<>(new ResponseMessage("Fail -> Username is already taken!"),
 					HttpStatus.BAD_REQUEST);
@@ -110,4 +111,42 @@ public class AuthRestAPIs {
 
 		return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
 	}
+	
+	//AddUserFromSipleUsers
+		@PostMapping("/signup")
+		public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
+			if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+				return new ResponseEntity<>(new ResponseMessage("Fail -> Username is already taken!"),
+						HttpStatus.BAD_REQUEST);
+			}
+
+			if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+				return new ResponseEntity<>(new ResponseMessage("Fail -> Email is already in use!"),
+						HttpStatus.BAD_REQUEST);
+			}
+
+			// Creating user's account
+			User user = new User(signUpRequest.getName(), signUpRequest.getUsername(), signUpRequest.getEmail(),
+					encoder.encode(signUpRequest.getPassword()));
+
+			Set<String> strRoles = signUpRequest.getRole();
+			Set<Role> roles = new HashSet<>();
+
+			strRoles.forEach(role -> {
+				
+					Role ownerRole = roleRepository.findByName(RoleName.ROLE_OWNER)
+							.orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
+					roles.add(ownerRole);
+
+					Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+							.orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
+					roles.add(userRole);
+				
+			});
+
+			user.setRoles(roles);
+			userRepository.save(user);
+
+			return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
+		}
 }

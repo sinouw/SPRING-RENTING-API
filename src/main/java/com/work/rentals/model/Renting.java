@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 import javax.persistence.Id;
 
+import com.work.rentals.model.auth.User;
+
 import java.io.Serializable;
 import java.util.Date;
 

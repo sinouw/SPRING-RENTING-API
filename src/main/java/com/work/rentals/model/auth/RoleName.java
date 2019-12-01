@@ -1,4 +1,4 @@
-package com.work.rentals.model;
+package com.work.rentals.model.auth;
 
 public enum  RoleName {
     ROLE_USER,
