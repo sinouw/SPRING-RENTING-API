@@ -1,11 +1,15 @@
 package com.work.rentals.services.imp;
 
 import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.work.rentals.model.Address;
 import com.work.rentals.repository.IAddressRepository;
 import com.work.rentals.services.IAddressService;
 
+@Service
 public class AddressService implements IAddressService{
 
 	@Autowired

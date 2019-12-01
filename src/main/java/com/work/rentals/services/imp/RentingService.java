@@ -3,11 +3,13 @@ package com.work.rentals.services.imp;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.work.rentals.model.Renting;
 import com.work.rentals.repository.IRentingRepository;
 import com.work.rentals.services.IRentingService;
 
+@Service
 public class RentingService implements IRentingService{
 
 	@Autowired
@@ -15,7 +17,7 @@ public class RentingService implements IRentingService{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Set<Renting> getAllRentings() {
+	public Set<Renting> getAllRentals() {
 		return (Set<Renting>)repo.findAll();
 	}
 

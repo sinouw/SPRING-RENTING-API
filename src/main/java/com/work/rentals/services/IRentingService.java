@@ -9,7 +9,7 @@ import com.work.rentals.model.Renting;
 
 public interface IRentingService {
 
-	Set<Renting> getAllRentings();
+	Set<Renting> getAllRentals();
 	
 	Renting getRentingById(Long id);
 	
