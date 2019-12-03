@@ -12,7 +12,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import com.work.rentals.graphql.datafetcher.AllHousesDataFetcher;
+import com.work.rentals.graphql.datafetcher.AllRentalsDataFetcher;
 import com.work.rentals.graphql.datafetcher.HouseDataFetcher;
+import com.work.rentals.graphql.datafetcher.RentalDataFetcher;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
@@ -30,12 +32,20 @@ public class GraphQlUtility  {
 
     	private AllHousesDataFetcher allHousesDataFetcher;
     	private HouseDataFetcher houseDataFetcher;
+    	private AllRentalsDataFetcher allRentalsDataFetcher;
+    	private RentalDataFetcher rentalDataFetcher;
     
     	@Autowired
-    	GraphQlUtility(AllHousesDataFetcher allHousesDataFetcher,
-    			HouseDataFetcher houseDataFetcher)throws IOException{
+    	GraphQlUtility(
+    			AllHousesDataFetcher allHousesDataFetcher,
+    			HouseDataFetcher houseDataFetcher,
+    			AllRentalsDataFetcher allRentalsDataFetcher,
+    			RentalDataFetcher rentalDataFetcher
+    			)throws IOException{
     		this.allHousesDataFetcher=allHousesDataFetcher;
     		this.houseDataFetcher=houseDataFetcher;
+    		this.allRentalsDataFetcher=allRentalsDataFetcher;
+    		this.rentalDataFetcher=rentalDataFetcher;
     		
     	}
 
@@ -64,15 +74,11 @@ public class GraphQlUtility  {
 
     public RuntimeWiring buildRuntimeWiring(){
         return newRuntimeWiring()
-//                .type("Query", typeWiring -> typeWiring
-//                    .dataFetcher("users", allUsersDataFetcher)
-//                    .dataFetcher("user", userDataFetcher))
-//                .type("User", typeWiring -> typeWiring
-//                    .dataFetcher("articles", articlesDataFetcher)
-//                    .dataFetcher("friends", allUsersDataFetcher))
         		.type("Query", typeWiring -> typeWiring
         				.dataFetcher("houses", allHousesDataFetcher)
         				.dataFetcher("house", houseDataFetcher)
+        				.dataFetcher("rentals", allRentalsDataFetcher)
+        				.dataFetcher("rental", rentalDataFetcher)
         				)
                 .build();
     }

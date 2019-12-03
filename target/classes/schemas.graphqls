@@ -5,7 +5,8 @@ schema {
 type Query {
     houses: [House!]
     house(id: Long): House!
-    
+    rentals:[Renting!]
+    rental(id:Long):Renting!
 }
 
 type House {

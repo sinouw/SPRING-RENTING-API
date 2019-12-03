@@ -32,7 +32,7 @@ public class House {
 	    private User user;
 	    
 	    
-	    @JsonManagedReference
+//	    @JsonManagedReference
 		@OneToMany(mappedBy = "house")
 	    private Set<Renting> rentals;
 

@@ -64,14 +64,14 @@ public class User{
     	inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @JsonManagedReference    
+//    @JsonManagedReference    
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "user")
     private Set<House> houses = new HashSet<>();
     
     
-    @JsonManagedReference
+//    @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Renting> rentals = new HashSet<>();
     
