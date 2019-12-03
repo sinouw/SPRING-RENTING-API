@@ -1,0 +1,41 @@
+schema {
+    query: Query
+}
+
+type Query {
+    houses: [House!]
+    house(id: Long): House!
+    
+}
+
+type House {
+    id: Long!
+    description: String!
+    Reserved: Boolean!
+    address: Address!
+    user: User!
+    rentals: [Renting!]
+
+}
+
+type Renting {
+	id: Long!
+	house:House!
+	user:User!
+	startDate:String!
+	endDate:String!
+	price:String!
+}
+
+type Address {
+   id: Long!
+   langitude: String!
+   lattitude: String!
+}
+
+type User {
+	id: Long!
+	name:String!
+	username:String!
+	email:String!
+}

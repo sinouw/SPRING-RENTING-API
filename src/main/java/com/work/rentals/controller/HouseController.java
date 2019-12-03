@@ -1,6 +1,6 @@
 package com.work.rentals.controller;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.work.rentals.model.House;
+import com.work.rentals.model.auth.User;
+import com.work.rentals.repository.IUserRepository;
 import com.work.rentals.services.IHouseService;
 
 
@@ -27,9 +29,12 @@ public class HouseController {
 	@Autowired
 	IHouseService service;
 	
+	@Autowired
+	IUserRepository userrepo;
+	
 	@GetMapping("/getall")
 	@CrossOrigin(origins = "http://localhost:8082", allowedHeaders = "*")
-	Set<House> getAllHouses(){
+	List<House> getAllHouses(){
 		return service.getAllHouse();
 	}
 	
@@ -39,9 +44,11 @@ public class HouseController {
 		return service.getHouseById(id);
 	}
 	
-	@PostMapping("/saveOrUpdate")
+	@PostMapping("/saveOrUpdate/{id}")
 	@CrossOrigin(origins = "http://localhost:8082", allowedHeaders = "*")
-	House addHouse(@RequestBody House house){
+	House addHouse(@RequestBody House house,@PathVariable Long id){
+		User user = userrepo.findById(id).get();
+		house.setUser(user);
 		return service.saveOrUpdate(house);
 	}
 	

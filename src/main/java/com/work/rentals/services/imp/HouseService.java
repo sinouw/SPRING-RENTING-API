@@ -2,6 +2,7 @@ package com.work.rentals.services.imp;
 
 
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,9 @@ public class HouseService implements IHouseService{
 	@Autowired
 	IHouseRepository repo;
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public Set<House> getAllHouse() {
-		return (Set<House>) repo.findAll();
+	public List<House> getAllHouse() {
+		return (List<House>) repo.findAll();
 	}
 
 	@Override
@@ -46,9 +46,9 @@ public class HouseService implements IHouseService{
 		return house.getReserved();
 	}
 
-	@SuppressWarnings("unchecked")
+
 	@Override
-	public Set<House> saveAll(Set<House> houses) {
-		return (Set<House>) repo.saveAll(houses);
+	public List<House> saveAll(Set<House> houses) {
+		return (List<House>) repo.saveAll(houses);
 	}
 }

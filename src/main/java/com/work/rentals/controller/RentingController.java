@@ -1,6 +1,6 @@
 package com.work.rentals.controller;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -13,7 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.work.rentals.model.House;
 import com.work.rentals.model.Renting;
+import com.work.rentals.model.auth.User;
+import com.work.rentals.repository.IUserRepository;
+import com.work.rentals.services.IHouseService;
 import com.work.rentals.services.IRentingService;
 
 @EnableAutoConfiguration
@@ -25,9 +29,15 @@ public class RentingController {
 	@Autowired
 	IRentingService service;
 	
+	@Autowired
+	IUserRepository userrepo;
+	
+	@Autowired
+	IHouseService houseservice;
+	
 	@GetMapping("/getall")
 	@CrossOrigin(origins = "http://localhost:8082", allowedHeaders = "*")
-	Set<Renting> getAllRentals(){
+	List<Renting> getAllRentals(){
 		return service.getAllRentals();
 	}
 	
@@ -37,9 +47,15 @@ public class RentingController {
 		return service.getRentingById(id);
 	}
 	
-	@PostMapping("/saveOrUpdate")
+	@PostMapping("/saveOrUpdate/{userid}/{houseid}")
 	@CrossOrigin(origins = "http://localhost:8082", allowedHeaders = "*")
-	Renting addRenting(@RequestBody Renting renting){
+	Renting addRenting(@RequestBody Renting renting,@PathVariable Long userid,@PathVariable Long houseid){
+		
+		User user = userrepo.findById(userid).get();
+		House house = houseservice.getHouseById(houseid);
+		
+		renting.setHouse(house);
+		renting.setUser(user);
 		return service.saveOrUpdate(renting);
 	}
 	

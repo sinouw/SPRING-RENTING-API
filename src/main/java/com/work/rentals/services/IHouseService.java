@@ -1,5 +1,6 @@
 package com.work.rentals.services;
 
+import java.util.List;
 import java.util.Set;
 
 import com.work.rentals.model.House;
@@ -7,7 +8,7 @@ import com.work.rentals.model.House;
 
 public interface IHouseService {
 
-	Set<House> getAllHouse();
+	List<House> getAllHouse();
 	
 	House getHouseById(Long id);
 	
@@ -17,5 +18,5 @@ public interface IHouseService {
 	
 	Boolean ToggleEnableRenting(Long id);
 
-	Set<House> saveAll(Set<House> houses);
+	List<House> saveAll(Set<House> houses);
 }

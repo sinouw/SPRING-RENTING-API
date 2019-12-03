@@ -1,6 +1,6 @@
 package com.work.rentals.services.imp;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +15,9 @@ public class RentingService implements IRentingService{
 	@Autowired
 	IRentingRepository repo;
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public Set<Renting> getAllRentals() {
-		return (Set<Renting>)repo.findAll();
+	public List<Renting> getAllRentals() {
+		return repo.findAll();
 	}
 
 	@Override

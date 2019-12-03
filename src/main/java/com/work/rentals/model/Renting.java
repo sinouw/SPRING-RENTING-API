@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.work.rentals.model.auth.User;
 
 import java.io.Serializable;
@@ -23,12 +24,12 @@ public class Renting implements Serializable {
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
 	
-	  	
+		@JsonIgnoreProperties({"hibernateLazyInitializer", "handler","rentals"})
 	    @ManyToOne
 	    @JoinColumn(name = "house_id")
 	    private House house;
 	  	
-	  	
+		@JsonIgnoreProperties({"hibernateLazyInitializer", "handler","rentals"})
 	    @ManyToOne
 	    @JoinColumn(name = "user_id")
 	    private User user;
@@ -38,6 +39,28 @@ public class Renting implements Serializable {
 	  	
 	  	@Column(name = "end_date")
 	    private Date endDate;
+	  	
+	  	@Column(name = "price")
+	    private Double price;
+
+		public Renting(Date startDate, Date endDate, Double price) {
+			this.startDate = startDate;
+			this.endDate = endDate;
+			this.price = price;
+		}
+
+		public Renting() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+
+		public Double getPrice() {
+			return price;
+		}
+
+		public void setPrice(Double price) {
+			this.price = price;
+		}
 
 		public Long getId() {
 			return id;

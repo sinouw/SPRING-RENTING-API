@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.work.rentals.model.auth.User;
 
 @Entity
@@ -16,19 +18,22 @@ public class House {
 
 	    private String description;
 	    
-	    private Boolean Reserved = true;
+	    private Boolean Reserved = false;
+	    
 	    
 	    @OneToOne(cascade = CascadeType.ALL)
 		@JoinColumn(name = "address_id", referencedColumnName = "id")
 	    private Address address;
 
 	    
+	    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler","houses","rentals"})
 	    @ManyToOne(fetch = FetchType.LAZY)
-	    @JoinColumn(name = "user_id", nullable = false)
+	    @JoinColumn(name = "user_id")
 	    private User user;
 	    
 	    
-	    @OneToMany(mappedBy = "house")
+	    @JsonManagedReference
+		@OneToMany(mappedBy = "house")
 	    private Set<Renting> rentals;
 
 		public House() {}
@@ -79,7 +84,23 @@ public class House {
 		}
 		
 		
-		
+		  
+	    public Address getAddress() {
+			return address;
+		}
+
+		public void setAddress(Address address) {
+			this.address = address;
+		}
+
+		public User getUser() {
+			return user;
+		}
+
+		public void setUser(User user) {
+			this.user = user;
+		}
+
 		
 		
 	    

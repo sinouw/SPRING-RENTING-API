@@ -2,6 +2,7 @@ package com.work.rentals.services;
 
 
 
+import java.util.List;
 import java.util.Set;
 
 import com.work.rentals.model.Renting;
@@ -9,7 +10,7 @@ import com.work.rentals.model.Renting;
 
 public interface IRentingService {
 
-	Set<Renting> getAllRentals();
+	List<Renting> getAllRentals();
 	
 	Renting getRentingById(Long id);
 	
